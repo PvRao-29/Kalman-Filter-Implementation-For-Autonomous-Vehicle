@@ -4,10 +4,8 @@ import math
 import matplotlib.cm as cm
 import matplotlib.colors as colors
 
-# File path for the final position estimates (from the enhanced Kalman filter)
-csv_file = 'position.csv'
+csv_file = 'data/position.csv'
 
-# Load the CSV data containing the position estimates
 try:
     data = pd.read_csv(csv_file)
 except FileNotFoundError:
@@ -92,18 +90,6 @@ if len(longitudes) > 0 and len(latitudes) > 0:
         label='End Point'
     )
 
-# Optionally, highlight intermediate points at regular intervals (e.g., every 50 points)
-interval = max(1, len(longitudes) // 20)  # Adjust interval based on data size
-for i in range(1, len(longitudes)-1, interval):
-    plt.scatter(
-        longitudes[i], 
-        latitudes[i], 
-        color='yellow', 
-        edgecolor='black', 
-        s=80, 
-        marker='D',  # Diamond marker
-        label='Intermediate Point' if i == interval else ""  # Label only once
-    )
 
 # Set the correct axis labels and title
 plt.xlabel("Longitude", fontsize=14, fontweight='bold')
@@ -117,21 +103,19 @@ plt.grid(True, which='both', linestyle='--', linewidth=0.7, color='gray', alpha=
 plt.xlim(min(longitudes) - margin_lon, max(longitudes) + margin_lon)
 plt.ylim(min(latitudes) - margin_lat, max(latitudes) + margin_lat)
 
-# Optional: Remove or adjust aspect ratio to prevent horizontal shrinkage
+# adjust aspect ratio to prevent horizontal shrinkage
 plt.gca().set_aspect('auto', adjustable='box')
 
-# Set background color for better contrast
+# background color for better contrast
 plt.gca().set_facecolor('whitesmoke')
 
-# Add legend with larger font size, avoiding duplicate labels
+# legend with larger font size, avoiding duplicate labels
 handles, labels = plt.gca().get_legend_handles_labels()
 by_label = dict(zip(labels, handles))
 plt.legend(by_label.values(), by_label.keys(), fontsize=12, loc='best')
 
-# Enhance layout
 plt.tight_layout()
 
-# Optionally, add annotations for start, end, and some intermediate points
 plt.annotate('Start', 
              xy=(longitudes[0], latitudes[0]), 
              xytext=(longitudes[0] + margin_lon*0.5, latitudes[0] + margin_lat*0.5),

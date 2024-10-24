@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 # Load stationary data for calibration
-stationary_data = pd.read_csv('stationary.csv')
+stationary_data = pd.read_csv('data/stationary.csv')
 gps_latitude_var = stationary_data['Latitude'].var()
 gps_longitude_var = stationary_data['Longitude'].var()
 
@@ -26,13 +26,13 @@ H = np.array([[1, 0, 0, 0],  # Latitude from state
               [0, 1, 0, 0]])  # Longitude from state
 
 # Load movement data
-movement_data = pd.read_csv('movement.csv')
+movement_data = pd.read_csv('data/movement.csv')
 
 # Ensure no NaNs in movement data for critical fields (Latitude, Longitude)
 movement_data = movement_data.dropna(subset=['Latitude', 'Longitude'], how='all')
 
 # Open a CSV file to store the refined position estimates
-output_file = 'position.csv'
+output_file = 'data/position.csv'
 with open(output_file, 'w') as f:
     f.write('Latitude,Longitude\n')
 

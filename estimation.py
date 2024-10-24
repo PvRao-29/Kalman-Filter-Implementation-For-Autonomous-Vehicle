@@ -107,7 +107,7 @@ def interpolate_position(input_time, times, latitudes, longitudes):
 
 def main():
     # File path for the final position estimates (from the enhanced Kalman filter)
-    csv_file = 'position.csv'
+    csv_file = 'data/position.csv'
     
     # Load position data
     data, has_time = load_position_data(csv_file)
